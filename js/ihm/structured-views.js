@@ -1,6 +1,8 @@
 /**
  * Vues structurées en tableaux pour chaque type de fichier (onglet « Vue structurée »).
- * Même logique : tableau + barre d’options pour masquer/afficher les champs sensibles.
+ * GDE : tableau + case pour masquer/afficher les mots de passe.
+ * GSA : tableau réduit (colonnes ODB) ; identifiant basic toujours visible.
+ * GSP : en-têtes toujours affichés (format | → lignes), sans case à cocher.
  */
 
 import { createActionsCell } from "./row-actions.js";
@@ -167,16 +169,6 @@ function buildGdeTableView(rows, ctx) {
 }
 
 /**
- * @param {unknown} v
- */
-function formatGsaListe(v) {
-  if (v === null || v === undefined) {
-    return "—";
-  }
-  return JSON.stringify(v);
-}
-
-/**
  * @param {object[]} rows
  * @param {StructuredViewContext | undefined} ctx
  */
@@ -184,24 +176,18 @@ function buildGsaTableView(rows, ctx) {
   const showActions = Boolean(ctx);
   const wrap = document.createElement("div");
 
-  const toolbar = document.createElement("div");
-  toolbar.className = "data-toolbar";
-  const label = document.createElement("label");
-  const cb = document.createElement("input");
-  cb.type = "checkbox";
-  cb.id = "toggle-secrets-gsa";
-  label.append(cb, document.createTextNode(" Afficher l’identifiant basic (gsa_id_basic)"));
-  toolbar.append(label);
-
   if (ctx?.onImportGsaXml) {
+    const toolbar = document.createElement("div");
+    toolbar.className = "data-toolbar";
     const btnXml = document.createElement("button");
     btnXml.type = "button";
     btnXml.className = "btn btn--secondary";
-    btnXml.textContent = "Importer XML…";
+    btnXml.textContent = 'Importer réponse XML service BASIC "vueServiceAnnuel"';
     btnXml.addEventListener("click", () => {
       ctx.onImportGsaXml();
     });
     toolbar.append(btnXml);
+    wrap.append(toolbar);
   }
 
   const tableWrap = document.createElement("div");
@@ -216,27 +202,17 @@ function buildGsaTableView(rows, ctx) {
     <th>Libellé SA</th>
     <th>Début</th>
     <th>Fin</th>
-    <th>Publication</th>
-    <th>DGA</th>
-    <th>Actif</th>
-    <th>Construction</th>
-    <th>Événements SA</th>
-    <th>Périodes circu</th>
-    <th>ID basic</th>
     <th>Plancher</th>
+    <th>Actif</th>
+    <th>ID Basic</th>
   </tr>`
     : `<tr>
     <th>Libellé SA</th>
     <th>Début</th>
     <th>Fin</th>
-    <th>Publication</th>
-    <th>DGA</th>
-    <th>Actif</th>
-    <th>Construction</th>
-    <th>Événements SA</th>
-    <th>Périodes circu</th>
-    <th>ID basic</th>
     <th>Plancher</th>
+    <th>Actif</th>
+    <th>ID Basic</th>
   </tr>`;
   const tbody = document.createElement("tbody");
 
@@ -252,54 +228,22 @@ function buildGsaTableView(rows, ctx) {
     tDeb.textContent = displayScalar(row.gsa_date_debut);
     const tFin = document.createElement("td");
     tFin.textContent = displayScalar(row.gsa_date_fin);
-    const tPub = document.createElement("td");
-    tPub.textContent = displayScalar(row.gsa_date_publication);
-    const tDga = document.createElement("td");
-    tDga.textContent = displayScalar(row.gsa_date_dga);
-    const tAct = document.createElement("td");
-    tAct.textContent = displayScalar(row.gsa_ind_actif);
-    const tCons = document.createElement("td");
-    tCons.textContent = displayScalar(row.gsa_date_construction);
-
-    const tEv = document.createElement("td");
-    tEv.className = "data-table__cell--json";
-    tEv.textContent = formatGsaListe(row.gsa_liste_evenement_du_sa);
-    const tPer = document.createElement("td");
-    tPer.className = "data-table__cell--json";
-    tPer.textContent = formatGsaListe(row.gsa_liste_periodes_de_circu);
-
-    const tId = document.createElement("td");
-    const idVal = row.gsa_id_basic;
-    if (idVal === null || idVal === undefined) {
-      tId.textContent = "—";
-    } else {
-      tId.append(createMaskedSpan(String(idVal)));
-    }
-
     const tPla = document.createElement("td");
     tPla.textContent = displayScalar(row.gsa_date_plancher);
+    const tAct = document.createElement("td");
+    tAct.textContent = displayScalar(row.gsa_ind_actif);
+    const tId = document.createElement("td");
+    tId.className = "data-table__cell--code";
+    tId.textContent = displayScalar(row.gsa_id_basic);
 
-    tr.append(
-      tLib,
-      tDeb,
-      tFin,
-      tPub,
-      tDga,
-      tAct,
-      tCons,
-      tEv,
-      tPer,
-      tId,
-      tPla,
-    );
+    tr.append(tLib, tDeb, tFin, tPla, tAct, tId);
     tbody.append(tr);
   });
 
   table.append(thead, tbody);
   tableWrap.append(table);
-  wireSecretToggle(tableWrap, cb);
 
-  wrap.append(toolbar, tableWrap);
+  wrap.append(tableWrap);
   return wrap;
 }
 
@@ -310,20 +254,6 @@ function buildGsaTableView(rows, ctx) {
 function buildGspTableView(rows, ctx) {
   const showActions = Boolean(ctx);
   const wrap = document.createElement("div");
-
-  const toolbar = document.createElement("div");
-  toolbar.className = "data-toolbar";
-  const label = document.createElement("label");
-  const cb = document.createElement("input");
-  cb.type = "checkbox";
-  cb.id = "toggle-secrets-gsp";
-  label.append(cb, document.createTextNode(" Afficher le contenu des en-têtes (secrets possibles)"));
-  toolbar.append(label);
-  const hint = document.createElement("p");
-  hint.className = "data-toolbar__hint";
-  hint.textContent =
-    "En-têtes : plusieurs blocs « Nom: valeur » séparés par |.";
-  toolbar.append(hint);
 
   const tableWrap = document.createElement("div");
   tableWrap.className = "data-table-wrap";
@@ -354,7 +284,7 @@ function buildGspTableView(rows, ctx) {
     if (hc === null || hc === undefined) {
       h.textContent = "—";
     } else {
-      h.append(createMaskedSpan(String(hc)));
+      h.textContent = gspHeadersPipeToNewlines(String(hc));
     }
 
     const e = document.createElement("td");
@@ -366,11 +296,8 @@ function buildGspTableView(rows, ctx) {
 
   table.append(thead, tbody);
   tableWrap.append(table);
-  wireSecretToggle(tableWrap, cb, ".data-secret", {
-    formatReveal: gspHeadersPipeToNewlines,
-  });
 
-  wrap.append(toolbar, tableWrap);
+  wrap.append(tableWrap);
   return wrap;
 }
 
