@@ -1,0 +1,38 @@
+[
+    {
+        "gsp_service": "ServiceCirculation",
+        "gsp_uri": "https://thp-api-pres-to.reseau.sncf.fr/std/usage-capacite/1.0-ECE-INT-MAX/capacite/circulation/v2/vue_circulation/vue_circulation_mise_a_jour_sur_intervalle",
+        "gsp_header_contenu": "x-api-key: e9abb96e-1d01-4248-b10f-34d5cdac46a1",
+        "gsp_header_envoyer": "true"
+    },
+    {
+        "gsp_service": "ServiceECI",
+        "gsp_uri": "http://xbqertbid3r.ermont.infra.sncf.fr:7568/serviceEci/eci",
+        "gsp_header_contenu": null,
+        "gsp_header_envoyer": "false"
+    },
+    {
+        "gsp_service": "ServiceEtatCirculation",
+        "gsp_uri": "https://thp-api-pres.reseau.sncf.fr/std/usage-capacite/1.0-ECE-INT-MIN/capacite/circulation/v2/etat_circulation/pour_les_ids",
+        "gsp_header_contenu": "x-api-key: e9abb96e-1d01-4248-b10f-34d5cdac46a1",
+        "gsp_header_envoyer": "true"
+    },
+    {
+        "gsp_service": "ServiceEvenement",
+        "gsp_uri": "https://thp-api-pres.reseau.sncf.fr/std/usage-capacite/1.0-ECE-INT-MIN/capacite/circulation/v2/evenement_circulation/pour_les_ids",
+        "gsp_header_contenu": "Accept-version: 2.0.16|x-api-key: e9abb96e-1d01-4248-b10f-34d5cdac46a1",
+        "gsp_header_envoyer": "true"
+    },
+    {
+        "gsp_service": "ServiceParcoursTopologique",
+        "gsp_uri": "https://thp-api-pres.reseau.sncf.fr/std/usage-capacite/1.0-ECE-INT-MIN/capacite/circulation/v2/parcours_topologique/pour_les_ids",
+        "gsp_header_contenu": "Accept-version: 2.5.4|x-api-key: e9abb96e-1d01-4248-b10f-34d5cdac46a1",
+        "gsp_header_envoyer": "true"
+    },
+    {
+        "gsp_service": "ServiceProfilHoraire",
+        "gsp_uri": "https://thp-api-pres.reseau.sncf.fr/std/usage-capacite/1.0-ECE-INT-MIN/capacite/circulation/v2/profil_horaire/pour_les_ids",
+        "gsp_header_contenu": "x-api-key: e9abb96e-1d01-4248-b10f-34d5cdac46a1",
+        "gsp_header_envoyer": "true"
+    }
+]

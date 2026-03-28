@@ -1,0 +1,9 @@
+[ {
+  "par_code" : "DATE_MRDT",
+  "par_valeur" : "2026-03-13T15:07:11Z",
+  "par_description" : "Date de début du traitement du module SRDT"
+}, {
+  "par_code" : "NB_ESSAI_APPEL_SERVICE",
+  "par_valeur" : "10",
+  "par_description" : "Nombre d'essais pour le SRDT"
+} ]

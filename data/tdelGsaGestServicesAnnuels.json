@@ -1,0 +1,93 @@
+[
+    {
+        "gsa_libelle_sa": "SA2019",
+        "gsa_date_debut": "2018-12-09",
+        "gsa_date_fin": "2019-12-14",
+        "gsa_date_publication": "2018-07-01",
+		"gsa_date_dga": "2018-07-01",
+        "gsa_ind_actif": "1",
+        "gsa_date_construction": "2018-01-01",
+		"gsa_liste_evenement_du_sa": null,
+		"gsa_liste_periodes_de_circu": null,
+        "gsa_id_basic": "4144463435344434313239333436333639414245424245433831433432433833",
+        "gsa_date_plancher": "2018-03-01"
+    },
+    {
+        "gsa_libelle_sa": "SA2020",
+        "gsa_date_debut": "2019-12-15",
+        "gsa_date_fin": "2020-12-12",
+        "gsa_date_publication": "2019-07-19",
+		"gsa_date_dga": "2019-07-01",
+        "gsa_ind_actif": "1",
+        "gsa_date_construction": "2019-01-01",
+		"gsa_liste_evenement_du_sa": null,
+		"gsa_liste_periodes_de_circu": null,
+        "gsa_id_basic": "4138454330444637363032453444374238393233334331314143414134323443",
+        "gsa_date_plancher": "2019-06-15"
+    },
+    {
+        "gsa_libelle_sa": "SA2021",
+        "gsa_date_debut": "2020-12-13",
+        "gsa_date_fin": "2021-12-11",
+        "gsa_date_publication": "2020-07-15",
+		"gsa_date_dga": "2020-07-01",
+        "gsa_ind_actif": "1",
+        "gsa_date_construction": "2020-01-01",
+		"gsa_liste_evenement_du_sa": null,
+		"gsa_liste_periodes_de_circu": null,
+        "gsa_id_basic": "3336303443373135413633413443304238363035353830354544313346324337",
+        "gsa_date_plancher": "2020-07-07"
+    },
+    {
+        "gsa_libelle_sa": "SA2023",
+        "gsa_date_debut": "2022-12-11",
+        "gsa_date_fin": "2023-12-09",
+        "gsa_date_publication": "2022-09-05",
+		"gsa_date_dga": "2022-07-07",
+        "gsa_ind_actif": "1",
+        "gsa_date_construction": "2022-01-01",
+		"gsa_liste_evenement_du_sa": null,
+		"gsa_liste_periodes_de_circu": null,
+        "gsa_id_basic": "3144333146374237343134333444333541374130363930453639424237324443",
+        "gsa_date_plancher": "2022-05-01"
+    },
+    {
+        "gsa_libelle_sa": "SA2024",
+        "gsa_date_debut": "2023-12-10",
+        "gsa_date_fin": "2024-12-14",
+        "gsa_date_publication": "2023-09-04",
+		"gsa_date_dga": "2023-07-01",
+        "gsa_ind_actif": "1",
+        "gsa_date_construction": "2023-01-01",
+		"gsa_liste_evenement_du_sa": null,
+		"gsa_liste_periodes_de_circu": null,
+        "gsa_id_basic": "4239353832434142373432433032433445303533414331433446314639433537",
+        "gsa_date_plancher": "2023-04-01"
+    },
+    {
+        "gsa_libelle_sa": "SA2025",
+        "gsa_date_debut": "2024-12-15",
+        "gsa_date_fin": "2025-12-13",
+        "gsa_date_publication": "2024-09-04",
+		"gsa_date_dga": "2023-07-01",
+        "gsa_ind_actif": "1",
+        "gsa_date_construction": "2024-01-01",
+		"gsa_liste_evenement_du_sa": null,
+		"gsa_liste_periodes_de_circu": null,
+        "gsa_id_basic": "4239353833363142323731423037343145303533374339373036304135433739",
+        "gsa_date_plancher": "2024-05-01"
+    },
+    {
+        "gsa_libelle_sa": "SA2026",
+        "gsa_date_debut": "2025-12-14",
+        "gsa_date_fin": "2026-12-12",
+        "gsa_date_publication": "2025-09-08",
+		"gsa_date_dga": "2024-07-01",
+        "gsa_ind_actif": "1",
+        "gsa_date_construction": "2025-01-01",
+		"gsa_liste_evenement_du_sa": null,
+		"gsa_liste_periodes_de_circu": null,
+        "gsa_id_basic": "4239353833393438433435463444443445303533313739353036304139354630",
+        "gsa_date_plancher": "2025-05-01"
+    }   
+]

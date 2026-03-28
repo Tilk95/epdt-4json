@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EPDT - Gestion des 4 fichiers paramétrage JSON</title>
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <main class="app-main">
+    <header class="app-header">
+      <h1 class="app-title">EPDT - Gestion des 4 fichiers paramétrage JSON</h1>
+    </header>
+    <section id="view-drop" class="view view--active" aria-labelledby="drop-title">
+      <h2 id="drop-title">Configuration JSON</h2>
+      <p class="lede">
+        Déposez les quatre fichiers JSON attendus (noms strictement identiques aux fichiers de référence).
+      </p>
+      <div
+        id="drop-zone"
+        class="drop-zone"
+        tabindex="0"
+        role="button"
+        aria-describedby="drop-hint"
+      >
+        <span class="drop-zone__title">Glisser-déposer les fichiers ici</span>
+        <span id="drop-hint" class="drop-zone__hint">Ou utiliser le bouton « Parcourir »</span>
+      </div>
+      <div class="drop-actions">
+        <input type="file" id="file-input" multiple accept=".json,application/json" hidden>
+        <!-- label + for : ouverture native du sélecteur (sans dépendre de input.click() / geste utilisateur) -->
+        <label id="btn-browse" class="btn btn--secondary" for="file-input">Parcourir…</label>
+      </div>
+      <div class="expected-files" aria-labelledby="expected-files-title">
+        <h2 id="expected-files-title" class="expected-files__title">Fichiers attendus</h2>
+        <ul id="expected-files-list" class="expected-files__list"></ul>
+      </div>
+      <p id="drop-feedback" class="feedback" aria-live="polite"></p>
+    </section>
+
+    <section id="view-tiles" class="view" hidden aria-labelledby="tiles-title">
+      <header class="tiles-bar">
+        <h2 id="tiles-title">Fichiers</h2>
+        <button type="button" id="btn-back-drop" class="btn btn--secondary">Retour au dépôt</button>
+      </header>
+      <div id="tile-grid" class="tile-grid"></div>
+    </section>
+  </main>
+
+  <dialog id="dialog-viewer" class="dialog-viewer" aria-labelledby="viewer-title">
+    <div class="dialog-viewer__inner">
+      <header class="dialog-viewer__head">
+        <h2 id="viewer-title"></h2>
+        <div class="dialog-viewer__actions">
+          <button type="button" id="viewer-export" class="btn btn--secondary" hidden>Exporter</button>
+          <button type="button" id="viewer-close" class="btn btn--secondary">Fermer</button>
+        </div>
+      </header>
+      <div class="dialog-viewer__body">
+        <div id="viewer-body" class="dialog-viewer__scroll" tabindex="-1"></div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="dialog-gsa-xml-import" class="dialog-gsa-xml-import" aria-labelledby="gsa-xml-import-title">
+    <div class="dialog-gsa-xml-import__inner">
+      <header class="dialog-gsa-xml-import__head">
+        <h2 id="gsa-xml-import-title">Importer des services annuels (XML)</h2>
+        <button type="button" id="gsa-xml-import-close" class="btn btn--secondary">Fermer</button>
+      </header>
+      <div class="dialog-gsa-xml-import__body">
+        <p id="gsa-xml-import-intro" class="dialog-gsa-xml-import__intro"></p>
+        <div id="gsa-xml-import-body" class="dialog-gsa-xml-import__scroll" tabindex="-1"></div>
+      </div>
+      <footer class="dialog-gsa-xml-import__foot">
+        <button type="button" id="gsa-xml-import-cancel" class="btn btn--secondary">Annuler</button>
+        <button type="button" id="gsa-xml-import-confirm" class="btn btn--primary">Importer la sélection</button>
+      </footer>
+    </div>
+  </dialog>
+
+  <dialog id="dialog-record" class="dialog-record" aria-labelledby="record-title">
+    <div class="dialog-record__inner">
+      <header class="dialog-record__head">
+        <h2 id="record-title"></h2>
+        <button type="button" id="record-close" class="btn btn--secondary">Fermer</button>
+      </header>
+      <div class="dialog-record__body">
+        <div id="record-body" class="dialog-record__scroll" tabindex="-1"></div>
+      </div>
+      <footer id="record-footer" class="dialog-record__foot"></footer>
+    </div>
+  </dialog>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

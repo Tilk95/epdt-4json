@@ -1,0 +1,927 @@
+/* Présentation : layout global, zone de dépôt, tuiles, modale */
+
+:root {
+  color-scheme: light dark;
+  --bg: #f4f5f7;
+  --surface: #fff;
+  --text: #1a1d21;
+  --muted: #5c6370;
+  --border: #d1d5db;
+  --accent: #2563eb;
+  --accent-muted: #dbeafe;
+  --danger: #b91c1c;
+  --danger-bg: #fee2e2;
+  --ok: #15803d;
+  --ok-bg: #dcfce7;
+  --warn: #a16207;
+  --warn-bg: #fef9c3;
+  --radius: 10px;
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, sans-serif;
+  line-height: 1.5;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111827;
+    --surface: #1f2937;
+    --text: #f3f4f6;
+    --muted: #9ca3af;
+    --border: #374151;
+    --accent: #60a5fa;
+    --accent-muted: #1e3a5f;
+    --danger: #fca5a5;
+    --danger-bg: #450a0a;
+    --ok: #86efac;
+    --ok-bg: #052e16;
+    --warn: #fde047;
+    --warn-bg: #422006;
+    --shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app-main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem;
+}
+
+.app-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.app-title {
+  font-size: 1.625rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.3;
+  color: var(--text);
+}
+
+.view[hidden] {
+  display: none !important;
+}
+
+.view--active {
+  display: block;
+}
+
+.view > h2,
+.tiles-bar h2 {
+  font-size: 1.35rem;
+  font-weight: 650;
+  margin: 0 0 0.5rem;
+}
+
+.lede {
+  color: var(--muted);
+  margin: 0 0 1.25rem;
+  max-width: 42rem;
+}
+
+/* Zone de dépôt */
+.drop-zone {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.drop-zone:hover,
+.drop-zone:focus-visible {
+  border-color: var(--accent);
+  outline: none;
+  background: var(--accent-muted);
+}
+
+.drop-zone--dragover {
+  border-color: var(--accent);
+  background: var(--accent-muted);
+}
+
+.drop-zone__title {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.drop-zone__hint {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.drop-actions {
+  margin-top: 1rem;
+}
+
+.feedback {
+  min-height: 1.5rem;
+  margin: 1rem 0 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.feedback--ok {
+  color: var(--ok);
+}
+
+.feedback--err {
+  color: var(--danger);
+}
+
+/* Fichiers attendus (écran dépôt) */
+.expected-files {
+  margin-top: 1.5rem;
+  padding: 1rem 1.1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.expected-files__title {
+  margin: 0 0 0.65rem;
+  font-size: 0.95rem;
+  font-weight: 650;
+  color: var(--text);
+}
+
+.expected-files__list {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.expected-files__list li {
+  margin-bottom: 0.35rem;
+}
+
+.expected-files__list li:last-child {
+  margin-bottom: 0;
+}
+
+.expected-files__name {
+  font-size: 0.85rem;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color: var(--text);
+  word-break: break-all;
+}
+
+/* Boutons */
+.btn {
+  font: inherit;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+label.btn {
+  display: inline-block;
+}
+
+.btn--secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Tuiles */
+.tiles-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.tile-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tile-card__foot {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn--export {
+  font-size: 0.85rem;
+  padding: 0.35rem 0.75rem;
+  width: 100%;
+}
+
+.tile__badge {
+  display: inline-block;
+  margin-top: 0.35rem;
+  padding: 0.15rem 0.45rem;
+  font-size: 0.75rem;
+  font-weight: 650;
+  border-radius: 6px;
+  background: var(--warn-bg);
+  color: var(--warn);
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding: 1rem 1rem 0.9rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  min-height: 120px;
+  transition: transform 0.12s, border-color 0.12s;
+}
+
+.tile:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+}
+
+.tile:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.tile:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.tile__label {
+  font-weight: 650;
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+}
+
+.tile__file {
+  font-size: 0.8rem;
+  color: var(--muted);
+  word-break: break-all;
+  margin: 0 0 0.75rem;
+}
+
+.tile__status {
+  margin-top: auto;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+}
+
+.tile__status--loaded {
+  background: var(--ok-bg);
+  color: var(--ok);
+}
+
+.tile__status--missing {
+  background: var(--warn-bg);
+  color: var(--warn);
+}
+
+.tile__status--error {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+/*
+ * Modale : Safari / WebKit gère mal le scroll si seule la flex fixe la hauteur.
+ * Important : ne pas appliquer display:flex sur le <dialog> fermé — cela écrase le
+ * display:none du navigateur et affiche la zone (titre vide + Fermer) sous la page.
+ */
+dialog.dialog-viewer:not([open]) {
+  display: none;
+}
+
+dialog.dialog-viewer[open] {
+  border: none;
+  border-radius: var(--radius);
+  padding: 0;
+  margin: auto;
+  max-width: min(900px, 100vw - 2rem);
+  width: 100%;
+  height: min(85vh, 900px);
+  max-height: min(85vh, 900px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+
+.dialog-viewer::backdrop {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.dialog-viewer__inner {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.dialog-viewer__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  flex: 0 0 auto;
+}
+
+.dialog-viewer__head h2 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 650;
+}
+
+.dialog-viewer__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/*
+ * Coquille flex (pas de scroll ici) + zone interne en position absolue remplissant l’espace :
+ * contourne les bugs de scroll flex/native <dialog> sur Safari / WebKit macOS.
+ */
+.dialog-viewer__body {
+  flex: 1 1 0%;
+  min-height: 0;
+  min-width: 0;
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+}
+
+.dialog-viewer__scroll {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: auto;
+  padding: 1rem 1.25rem 1.25rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  overscroll-behavior: contain;
+  touch-action: pan-x pan-y;
+}
+
+.dialog-viewer__scroll:focus {
+  outline: none;
+}
+
+/* Barres de défilement visibles */
+.dialog-viewer__scroll::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.dialog-viewer__scroll::-webkit-scrollbar-track {
+  background: var(--bg);
+  border-radius: 6px;
+}
+
+.dialog-viewer__scroll::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 6px;
+  border: 2px solid var(--bg);
+}
+
+.dialog-viewer__scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--text);
+}
+
+/* Onglets visualisation */
+.viewer-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 0;
+  min-width: 0;
+}
+
+.viewer-tabs__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.5rem;
+}
+
+.viewer-tabs__tab {
+  font: inherit;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid transparent;
+  border-radius: 8px 8px 0 0;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.viewer-tabs__tab:hover {
+  color: var(--text);
+  background: var(--bg);
+}
+
+.viewer-tabs__tab--active {
+  color: var(--accent);
+  font-weight: 600;
+  border-color: var(--border);
+  border-bottom-color: var(--surface);
+  margin-bottom: -1px;
+  background: var(--surface);
+}
+
+.viewer-tabs__tab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.viewer-tabs__panel[hidden] {
+  display: none !important;
+}
+
+.viewer-tabs__panel:not([hidden]) {
+  min-height: 0;
+}
+
+.viewer-raw {
+  margin: 0;
+}
+
+/* Tableaux données (tous les fichiers) */
+.data-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.data-toolbar__hint {
+  margin: 0.35rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.35;
+  color: var(--muted);
+  max-width: 48rem;
+}
+
+.data-table-wrap {
+  overflow-x: scroll;
+  overflow-y: visible;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+}
+
+.data-table-wrap::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+
+.data-table-wrap::-webkit-scrollbar-track {
+  background: var(--bg);
+  border-radius: 4px;
+}
+
+.data-table-wrap::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 4px;
+}
+
+.data-table-wrap::-webkit-scrollbar-thumb:hover {
+  background: var(--text);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.data-table th,
+.data-table td {
+  padding: 0.5rem 0.65rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.data-table th {
+  background: var(--bg);
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.data-table__cell--uri {
+  word-break: break-all;
+  max-width: 22rem;
+}
+
+/* Colonne en-têtes GSP : sauts de ligne visibles quand le contenu est révélé (| → newline). */
+.data-table__cell--gsp-headers {
+  white-space: pre-line;
+  max-width: 28rem;
+  word-break: break-word;
+}
+
+.data-table__cell--json {
+  font-size: 0.8rem;
+  font-family: ui-monospace, monospace;
+  max-width: 12rem;
+  word-break: break-word;
+}
+
+.data-table__cell--code {
+  word-break: break-word;
+}
+
+.json-pre {
+  margin: 0;
+  padding: 1rem;
+  background: var(--bg);
+  border-radius: 8px;
+  overflow: visible;
+  max-height: none;
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.viewer-msg {
+  color: var(--muted);
+}
+
+.viewer-msg--error {
+  color: var(--danger);
+}
+
+.viewer-msg__action {
+  margin-top: 0.75rem;
+}
+
+.data-table__col-check {
+  width: 1%;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* Modale import XML services annuels (GSA) */
+dialog.dialog-gsa-xml-import:not([open]) {
+  display: none;
+}
+
+dialog.dialog-gsa-xml-import[open] {
+  border: none;
+  border-radius: var(--radius);
+  padding: 0;
+  margin: auto;
+  max-width: min(920px, 100vw - 2rem);
+  width: 100%;
+  height: min(85vh, 760px);
+  max-height: min(85vh, 760px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+
+.dialog-gsa-xml-import__inner {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.dialog-gsa-xml-import__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  flex: 0 0 auto;
+}
+
+.dialog-gsa-xml-import__head h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 650;
+}
+
+.dialog-gsa-xml-import__body {
+  flex: 1 1 0%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.dialog-gsa-xml-import__intro {
+  margin: 0;
+  padding: 0.75rem 1.25rem 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+  flex: 0 0 auto;
+}
+
+.dialog-gsa-xml-import__scroll {
+  flex: 1 1 0%;
+  min-height: 0;
+  overflow: auto;
+  padding: 0.25rem 1.25rem 1rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dialog-gsa-xml-import__foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid var(--border);
+  flex: 0 0 auto;
+}
+
+/* Actions de sélection au-dessus du tableau (import XML GSA) */
+.gsa-xml-import-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.gsa-xml-import-table {
+  font-size: 0.85rem;
+}
+
+/* Modale enregistrement (voir / ajouter / supprimer / modifier) */
+dialog.dialog-record:not([open]) {
+  display: none;
+}
+
+dialog.dialog-record[open] {
+  border: none;
+  border-radius: var(--radius);
+  padding: 0;
+  margin: auto;
+  max-width: min(560px, 100vw - 2rem);
+  width: 100%;
+  height: min(80vh, 720px);
+  max-height: min(80vh, 720px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+
+.dialog-record__inner {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.dialog-record__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  flex: 0 0 auto;
+}
+
+.dialog-record__head h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 650;
+}
+
+.dialog-record__body {
+  flex: 1 1 0%;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+}
+
+.dialog-record__scroll {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: auto;
+  padding: 1rem 1.25rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dialog-record__foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid var(--border);
+  flex: 0 0 auto;
+}
+
+.record-modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.record-modal__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.record-modal__label-text {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.record-modal__input,
+.record-modal__textarea,
+.record-modal__select {
+  width: 100%;
+  max-width: 100%;
+  font: inherit;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.record-modal__select {
+  cursor: pointer;
+}
+
+.record-modal__textarea {
+  resize: vertical;
+  min-height: 4rem;
+}
+
+.record-modal__hint {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.record-modal__warn {
+  margin: 0;
+  color: var(--muted);
+}
+
+.record-modal__dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: minmax(8rem, auto) 1fr;
+  gap: 0.35rem 1rem;
+  font-size: 0.9rem;
+}
+
+.record-modal__dl dt {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.record-modal__dl dd {
+  margin: 0;
+  word-break: break-word;
+}
+
+.record-modal__dl dd.record-modal__dd--multiline {
+  white-space: pre-line;
+}
+
+/* Colonne actions + boutons icônes */
+.data-table__col-a {
+  width: 1%;
+  white-space: nowrap;
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: var(--surface);
+  box-shadow: 1px 0 0 var(--border);
+}
+
+.data-table th.data-table__col-a {
+  background: var(--bg);
+}
+
+.row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+  align-items: center;
+}
+
+.row-actions__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.row-actions__btn:hover {
+  background: var(--accent-muted);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.row-actions__btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.btn--primary:hover {
+  filter: brightness(1.05);
+  color: #fff;
+}
+
+.btn--danger {
+  background: var(--danger-bg);
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.btn--danger:hover {
+  filter: brightness(0.97);
+}
